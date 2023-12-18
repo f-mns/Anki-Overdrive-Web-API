@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Speed Control</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.box {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+form {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="submit"],
+input[type="range"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: calc(100% - 22px);
+    transition: all 0.3s ease; /* Smooth transition for input fields */
+}
+
+
+
+input[type="submit"] {
+    color: white;
+    cursor: pointer;
+    border-radius: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease; /* Smooth transition for buttons */
+}
+
+input[type="submit"]:hover {
+    transform: scale(1.05); /* Scale effect on hover */
+}
+
+input[type="submit"]:active {
+    transform: scale(0.95); /* Scale effect on click */
+    box-shadow: 0 0 5px rgba(33, 150, 243, 1); /* Shadow on click */
+}
+
+.left-form {
+    float: left;
+    width: calc(50% - 5px);
+}
+
+.right-form {
+    float: right;
+    width: calc(50% - 5px);
+}
+
+.leftright {
+    overflow: hidden;
+}
+
+#{{ connection_now | safe }} {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Anki Overdrive Web API</h1>
+        <div class="box">
+            <form action="/connect" method="post">
+                <label for="mac">Enter MAC:</label>
+                <input type="text" id="mac" name="mac">
+                <input style="background-color: #45a049;" type="submit" value="Connect">
+            </form>
+            <div id="options">
+                <form action="/control" method="post">
+                    <label for="speed">Enter speed:</label>
+                    <input type="range" min="0" max="1000" step="1.0" value="{{ speed | safe }}" name="speed">
+                    <!-- Add the 'name="speed"' attribute to identify the speed input -->
+                    <input style="background-color: rgb(219, 155, 36);" type="submit" value="Set Speed">
+                </form>
+                <form  action="/disconnect" method="get">
+                    <input style="background-color: #d14141;" type="submit" value="Disconnect">
+                </form>
+                <div class="leftright">
+                    <form action="/left" method="get" class="left-form">
+                        <input style="background-color: #3979c2;" type="submit" value="Left">
+                    </form>
+                    <form action="/right" method="get" class="right-form">
+                        <input style="background-color: #3979c2;" type="submit" value="Right">
+                    </form>
+            </div>
+            </div>
+        </div>
+        <div class="connection" id="connection">
+            {{ connection | safe }}
+        </div>
+    </div>
+</body>
+</html>
